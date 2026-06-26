@@ -1,0 +1,20 @@
+import { Router } from 'express';
+import { PrismaClient } from '@prisma/client';
+
+const router = Router();
+const prisma = new PrismaClient();
+
+// Route pour récupérer les jetons les plus viraux
+router.get('/top-tokens', async (req, res) => {
+    try {
+        const tokens = await prisma.token.findMany({
+            orderBy: { viralScore: 'desc' },
+            take: 20 // On affiche les 20 meilleurs
+        });
+        res.json(tokens);
+    } catch (error) {
+        res.status(500).json({ error: "Erreur lors de la récupération des jetons" });
+    }
+});
+
+export default router;

@@ -1,0 +1,60 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+// Définition de la structure des données (pour le typage TypeScript)
+interface Token {
+  id: string;
+  symbol: string;
+  viralScore: number;
+  liquidity: number;
+}
+
+function App() {
+  const [tokens, setTokens] = useState<Token[]>([]);
+
+  useEffect(() => {
+    // Appel vers votre API backend configurée sur le port 3000
+    axios.get('http://localhost:3000/api/top-tokens')
+      .then(res => {
+        setTokens(res.data);
+      })
+      .catch(err => {
+        console.error("Erreur lors de la récupération des jetons :", err);
+      });
+  }, []);
+
+  return (
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px', fontFamily: 'sans-serif' }}>
+      <h1>🚀 PumpScanner Pro - Top Tokens</h1>
+      
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+        <thead>
+          <tr style={{ background: '#f4f4f4', textAlign: 'left' }}>
+            <th style={{ padding: '10px' }}>Symbole</th>
+            <th style={{ padding: '10px' }}>Score Viral</th>
+            <th style={{ padding: '10px' }}>Liquidité ($)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tokens.length > 0 ? (
+            tokens.map((token) => (
+              <tr key={token.id} style={{ borderBottom: '1px solid #ddd' }}>
+                <td style={{ padding: '10px' }}>{token.symbol}</td>
+                <td style={{ padding: '10px' }}>{token.viralScore} / 100</td>
+                <td style={{ padding: '10px' }}>{token.liquidity.toLocaleString()}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={3} style={{ padding: '20px', textAlign: 'center' }}>
+                Aucun jeton trouvé pour le moment...
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default App;

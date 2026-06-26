@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Token {
+  id          Int      @id @default(autoincrement())
+  address     String   @unique
+  name        String
+  symbol      String
+  price       Float
+  marketCap   Float
+  volume24h   Float
+  holders     Int
+  viralScore  Float
+  createdAt   DateTime @default(now())
+}
