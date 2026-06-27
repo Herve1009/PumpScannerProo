@@ -1,7 +1,11 @@
-
 require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
+
+const healthRoute = require("./routes/health");
+const tokenRoute = require("./routes/tokens");
+const scanRoute = require("./routes/scan");
 
 const app = express();
 
@@ -12,30 +16,24 @@ app.get("/", (req, res) => {
     res.json({
         application: "PumpScannerPro",
         version: "1.0.0",
-        status: "En ligne"
+        status: "En ligne",
+        author: "Herve1009"
     });
 });
 
-app.get("/api/health", (req, res) => {
-    res.json({
-        success: true,
-        message: "API opérationnelle"
-    });
-});
+app.use("/api/health", healthRoute);
+app.use("/api/tokens", tokenRoute);
+app.use("/api/scan", scanRoute);
 
-app.get("/api/top-tokens", (req, res) => {
-    res.json([
-        {
-            name: "Exemple Token",
-            symbol: "PUMP",
-            price: 0.00012,
-            viralScore: 98
-        }
-    ]);
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        message: "Route introuvable"
+    });
 });
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log(`Serveur lancé sur le port ${PORT}`);
+    console.log(`🚀 PumpScannerPro lancé sur le port ${PORT}`);
 });
