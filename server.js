@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -9,9 +10,9 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
     res.json({
-        name: "PumpScannerPro",
-        status: "online",
-        version: "1.0.0"
+        application: "PumpScannerPro",
+        version: "1.0.0",
+        status: "En ligne"
     });
 });
 
@@ -22,12 +23,19 @@ app.get("/api/health", (req, res) => {
     });
 });
 
-app.get("/api/tokens", (req, res) => {
-    res.json([]);
+app.get("/api/top-tokens", (req, res) => {
+    res.json([
+        {
+            name: "Exemple Token",
+            symbol: "PUMP",
+            price: 0.00012,
+            viralScore: 98
+        }
+    ]);
 });
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log("Serveur démarré sur le port " + PORT);
+    console.log(`Serveur lancé sur le port ${PORT}`);
 });
