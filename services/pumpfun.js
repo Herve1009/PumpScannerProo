@@ -9,7 +9,12 @@ async function getTrendingTokens() {
 
         const pairs = response.data.pairs || [];
 
-        const tokens = pairs.slice(0, 20).map(pair => ({
+        const filtered = pairs.filter(pair =>
+            pair.chainId === "solana" &&
+            pair.dexId === "pumpswap"
+        );
+
+        const tokens = filtered.map(pair => ({
             chain: pair.chainId,
             dex: pair.dexId,
             name: pair.baseToken.name,
@@ -26,6 +31,8 @@ async function getTrendingTokens() {
         tokens.forEach(token => {
             token.viralScore = calculateScore(token);
         });
+
+        tokens.sort((a, b) => b.viralScore - a.viralScore);
 
         return { pairs: tokens };
 
