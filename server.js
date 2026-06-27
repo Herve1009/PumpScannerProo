@@ -1,29 +1,33 @@
-require('dotenv').config();
-const express = require('express');
-const path = require('path');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
-// Servir les fichiers du dossier public
-app.use(express.static(path.join(__dirname, 'public')));
-
-// API de test
-app.get('/api/status', (req, res) => {
+app.get("/", (req, res) => {
     res.json({
+        name: "PumpScannerPro",
         status: "online",
-        application: "PumpScannerPro",
         version: "1.0.0"
     });
 });
 
-// Accueil
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get("/api/health", (req, res) => {
+    res.json({
+        success: true,
+        message: "API opérationnelle"
+    });
 });
 
+app.get("/api/tokens", (req, res) => {
+    res.json([]);
+});
+
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-    console.log(`PumpScannerPro démarré sur le port ${PORT}`);
+    console.log("Serveur démarré sur le port " + PORT);
 });
