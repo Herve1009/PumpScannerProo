@@ -6,6 +6,7 @@ const cors = require("cors");
 const healthRoute = require("./routes/health");
 const tokenRoute = require("./routes/tokens");
 const scanRoute = require("./routes/scan");
+const historyRoute = require("./routes/history");
 
 const app = express();
 
@@ -16,14 +17,14 @@ app.get("/", (req, res) => {
     res.json({
         application: "PumpScannerPro",
         version: "1.0.0",
-        status: "En ligne",
-        author: "Herve1009"
+        status: "En ligne"
     });
 });
 
 app.use("/api/health", healthRoute);
 app.use("/api/tokens", tokenRoute);
 app.use("/api/scan", scanRoute);
+app.use("/api/history", historyRoute);
 
 app.use((req, res) => {
     res.status(404).json({

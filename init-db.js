@@ -1,0 +1,30 @@
+require("dotenv").config();
+
+const { query } = require("./services/database");
+
+async function init() {
+    try {
+        await query(`
+            CREATE TABLE IF NOT EXISTS tokens (
+                id SERIAL PRIMARY KEY,
+                address TEXT UNIQUE NOT NULL,
+                name TEXT,
+                symbol TEXT,
+                price DOUBLE PRECISION,
+                market_cap DOUBLE PRECISION,
+                liquidity DOUBLE PRECISION,
+                volume_24h DOUBLE PRECISION,
+                viral_score INTEGER,
+                created_at TIMESTAMP DEFAULT NOW()
+            );
+        `);
+
+        console.log("✅ Table tokens créée.");
+        process.exit(0);
+    } catch (err) {
+        console.error("❌ Erreur :", err.message);
+        process.exit(1);
+    }
+}
+
+init();
