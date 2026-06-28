@@ -8,12 +8,14 @@ const tokenRoute = require("./routes/tokens");
 const scanRoute = require("./routes/scan");
 const historyRoute = require("./routes/history");
 const authRoute = require("./routes/auth");
+const signalsRoute = require("./routes/signals");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
+
 app.get("/", (req, res) => {
     res.json({
         application: "PumpScannerPro",
@@ -27,6 +29,7 @@ app.use("/api/tokens", tokenRoute);
 app.use("/api/scan", scanRoute);
 app.use("/api/history", historyRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/signals", signalsRoute);
 
 app.use((req, res) => {
     res.status(404).json({
