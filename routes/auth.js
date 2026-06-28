@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-    register,
-    login
-} = require("../services/authService");
+const { register, login } = require("../services/authService");
 
 router.post("/register", async (req, res) => {
     try {
@@ -12,33 +9,33 @@ router.post("/register", async (req, res) => {
 
         res.json({
             success: true,
-            message: "Compte créé avec succès.",
             user
         });
+
     } catch (error) {
-        res.status(400).json({
+        console.error(error);
+
+        res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message,
+            stack: error.stack
         });
     }
 });
 
 router.post("/login", async (req, res) => {
     try {
-        const result = await login(
-            req.body.email,
-            req.body.password
-        );
+        const result = await login(req.body.email, req.body.password);
 
-        res.json({
-            success: true,
-            token: result.token,
-            user: result.user
-        });
+        res.json(result);
+
     } catch (error) {
-        res.status(401).json({
+        console.error(error);
+
+        res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message,
+            stack: error.stack
         });
     }
 });
