@@ -26,7 +26,9 @@ form.addEventListener("submit", async (e) => {
 
         const result = await response.json();
 
-        if (result.success) {
+        console.log("Réponse API :", result);
+
+        if (response.ok && result.success) {
             message.className = "message success";
             message.textContent = "✅ Compte créé avec succès !";
 
@@ -38,11 +40,17 @@ form.addEventListener("submit", async (e) => {
 
         } else {
             message.className = "message error";
-            message.textContent = result.message || "Erreur lors de l'inscription.";
+
+            message.textContent =
+                "Erreur : " +
+                (result.message || JSON.stringify(result));
         }
 
     } catch (error) {
+        console.error("Erreur :", error);
+
         message.className = "message error";
-        message.textContent = "Impossible de contacter le serveur.";
+        message.textContent =
+            "Impossible de contacter le serveur : " + error.message;
     }
 });
