@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>PumpScannerPro Dashboard</title>
 
 <link rel="stylesheet" href="css/style.css">
@@ -10,65 +11,75 @@
 
 <body>
 
-<header class="topbar">
-<h1>🚀 PumpScannerPro</h1>
+<div class="sidebar">
+
+<h2>🚀 PumpScannerPro</h2>
+
+<ul>
+
+<li><a href="#">📊 Dashboard</a></li>
+
+<li><a href="#">📡 Scanner</a></li>
+
+<li><a href="#">⭐ Favoris</a></li>
+
+<li><a href="#">📜 Historique</a></li>
+
+<li><a href="#">👤 Mon Profil</a></li>
+
+<li><a href="#">💎 Premium</a></li>
+
+</ul>
 
 <button id="logoutBtn">
 Déconnexion
 </button>
-</header>
 
-<div class="container">
+</div>
 
-<h2>Bienvenue</h2>
+<div class="main">
+
+<header>
+
+<h1>Tableau de bord</h1>
 
 <p id="welcome"></p>
 
+</header>
+
+<div class="cards">
+
 <div class="card">
-<h3>👤 Mon compte</h3>
 
-<p><strong>Email :</strong> <span id="email"></span></p>
+<h3>Signaux aujourd'hui</h3>
 
-<p><strong>WhatsApp :</strong> <span id="whatsapp"></span></p>
-
-<p><strong>Pays :</strong> <span id="country"></span></p>
-
-<p><strong>Abonnement :</strong>
-<span id="role"></span>
-</p>
+<h2 id="signalCount">0</h2>
 
 </div>
 
 <div class="card">
 
-<h3>📡 Scanner Pump.fun</h3>
+<h3>Mon abonnement</h3>
 
-<p>
-Les nouveaux signaux apparaîtront ici.
-</p>
-
-<button>
-Lancer le Scanner
-</button>
+<h2 id="role">FREE</h2>
 
 </div>
 
 <div class="card">
 
-<h3>💎 Premium</h3>
+<h3>Score IA moyen</h3>
 
-<p>
+<h2>96%</h2>
 
-Passez Premium pour recevoir
-les signaux directement sur WhatsApp.
+</div>
 
-</p>
+</div>
 
-<button>
+<h2>📡 Derniers signaux</h2>
 
-Devenir Premium
+<div id="signalsContainer">
 
-</button>
+Chargement...
 
 </div>
 
